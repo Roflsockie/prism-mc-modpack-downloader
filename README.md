@@ -6,17 +6,38 @@
 
 `#minecraft` `#modpack` `#curseforge` `#prismlauncher` `#minecraft-mods` `#modpack-downloader` `#python` `#flask`
 
-## Быстрый старт
+## Установка и запуск
 
-```
+### Вариант 1: Скачать ZIP (проще всего)
+
+1. Откройте https://github.com/Roflsockie/prism-mc-modpack-downloader
+2. Нажмите зелёную кнопку **«Code»**
+3. Выберите **«Download ZIP»**
+4. Распакуйте архив в любую папку на компьютере
+5. Откройте папку и запустите **`start.bat`**
+
+### Вариант 2: Через Git
+
+```bash
+git clone https://github.com/Roflsockie/prism-mc-modpack-downloader.git
+cd prism-mc-modpack-downloader
 start.bat
 ```
 
-Скрипт сам создаст виртуальное окружение, папку download/, установит зависимости,
-откроет браузер и запустит сервер.
+### Что делает start.bat
 
-**Перед первым использованием:** нажмите «Настройки API» в интерфейсе и
-введите ваш CurseForge API ключ. Получить: https://console.curseforge.com
+При первом запуске скрипт автоматически:
+1. Создаёт виртуальное окружение Python (`venv/`)
+2. Создаёт папку для загрузок (`download/`)
+3. Устанавливает все необходимые зависимости
+4. Открывает браузер с интерфейсом
+5. Запускает сервер
+
+**Перед первым использованием:** нажмите **«Настройки API»** в правом верхнем углу
+и введите ваш CurseForge API ключ.
+
+Получить ключ (бесплатно, регистрация 2 минуты):
+https://console.curseforge.com → API Keys → Create API Key
 
 ## Структура проекта
 
