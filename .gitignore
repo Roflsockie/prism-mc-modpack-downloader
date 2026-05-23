@@ -1,0 +1,13 @@
+# Virtual environment
+venv/
+
+# Temporary files
+tmp/
+
+# Downloaded modpack archives
+download/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
