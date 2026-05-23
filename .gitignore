@@ -11,3 +11,6 @@ download/
 __pycache__/
 *.pyc
 *.pyo
+
+# API key (contains user's personal CurseForge API key)
+config.json

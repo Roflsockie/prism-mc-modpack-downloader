@@ -186,14 +186,16 @@ async function doSearch(page){
 }
 
 function renderSearch(data){
-    if(!data.results.length){
+    const results = data.results;
+    if(!results.length){
         el('content').innerHTML = '<div class="empty">Ничего не найдено</div>';
         return;
     }
     let h = '<div class="results">';
-    for(const m of data.results){
+    for(let i = 0; i < results.length; i++){
+        const m = results[i];
         const img = m.logo ? `<img src="${esc(m.logo)}" onerror="this.style.display='none'">` : '';
-        h += `<div class="modpack-card" onclick="showDetail(${m.id},'${esc(m.name)}','${esc(m.summary)}','${esc(m.logo)}','${esc(m.authors)}',${m.downloads})">
+        h += `<div class="modpack-card" data-idx="${i}">
             ${img}
             <div class="modpack-info">
                 <h3>${esc(m.name)}</h3>
@@ -203,7 +205,6 @@ function renderSearch(data){
         </div>`;
     }
     h += '</div>';
-    // Pagination
     const totalPages = Math.ceil(data.total / 20);
     if(totalPages > 1){
         h += '<div class="pagination">';
@@ -213,6 +214,12 @@ function renderSearch(data){
         h += '</div>';
     }
     el('content').innerHTML = h;
+    document.querySelectorAll('.modpack-card').forEach(card => {
+        const m = results[parseInt(card.dataset.idx)];
+        card.addEventListener('click', () => {
+            showDetail(m.id, m.name, m.summary, m.logo, m.authors, m.downloads);
+        });
+    });
 }
 
 async function showDetail(id, name, summary, logo, authors, downloads){
@@ -247,18 +254,25 @@ function renderFiles(files, mpName){
     }
     let h = `<table class="files-table">
         <tr><th>Версия</th><th>Дата</th><th>Размер</th><th>Игра</th><th></th></tr>`;
-    for(const f of files){
+    for(let i = 0; i < files.length; i++){
+        const f = files[i];
         const d = f.date ? new Date(f.date).toLocaleDateString('ru-RU') : '—';
         h += `<tr>
             <td><strong>${esc(f.name)}</strong></td>
             <td>${d}</td>
             <td>${f.size_mb} МБ</td>
             <td style="font-size:.8em;color:#888">${esc(f.version)}</td>
-            <td><button class="dl-btn" onclick="startDownload(${state.modpack.id},${f.id},'${esc(f.name)}',this)">Скачать с модами</button></td>
+            <td><button class="dl-btn" data-file-idx="${i}">Скачать с модами</button></td>
         </tr>`;
     }
     h += '</table>';
     el('files').innerHTML = h;
+    document.querySelectorAll('#files .dl-btn').forEach(btn => {
+        const f = files[parseInt(btn.dataset.fileIdx)];
+        btn.addEventListener('click', function() {
+            startDownload(state.modpack.id, f.id, f.name, this);
+        });
+    });
 }
 
 async function startDownload(modpackId, fileId, name, btn){
