@@ -217,7 +217,7 @@ def do_download(dl_id, modpack_id, file_id, display_name):
         dl["speed"] = ""
         out_path = DOWNLOAD_DIR / f"{safe_name}.zip"
 
-        with zipfile.ZipFile(out_path, "w", zipfile.ZIP_STORED) as zf:
+        with zipfile.ZipFile(out_path, "w", zipfile.ZIP_DEFLATED) as zf:
             # 6a) Stream all files from structure zip with path remapping
             with zipfile.ZipFile(mp_zip, "r") as src:
                 entries = [e for e in src.infolist() if not e.filename.endswith("/")]
